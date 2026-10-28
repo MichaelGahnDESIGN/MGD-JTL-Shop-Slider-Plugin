@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jtlshopplugin>
+    <Name>MGD Slider</Name>
+    <Description>Slider für JTL-Shop 5 (Pre-Alpha, nicht für Live-Shops)</Description>
+    <Author>Michael Gahn DESIGN</Author>
+    <URL>https://themes.michael-gahn.de</URL>
+    <PluginID>mgd_slider</PluginID>
+    <XMLVersion>102</XMLVersion>
+    <ShopVersion>5.0.0</ShopVersion>
+    <CreateDate>2026-10-28</CreateDate>
+    <Version>0.1.0</Version>
+    <Install>
+        <FlushTags>CACHING_GROUP_TEMPLATE,CACHING_GROUP_PLUGIN</FlushTags>
+        <Adminmenu>
+            <Customlink sort="1">
+                <Name>Slider</Name>
+            </Customlink>
+            <Customlink sort="2">
+                <Name>Lizenzen</Name>
+            </Customlink>
+        </Adminmenu>
+        <Portlets>
+            <Portlet>
+                <Title>MGD Slider</Title>
+                <Class>MGDSlider</Class>
+                <Group>content</Group>
+                <Active>1</Active>
+            </Portlet>
+        </Portlets>
+        <CSS>
+            <file>
+                <name>mgd-slider.css</name>
+                <priority>5</priority>
+            </file>
+        </CSS>
+        <JS>
+            <file>
+                <name>mgd-slider-model.js</name>
+                <priority>5</priority>
+                <position>body</position>
+            </file>
+            <file>
+                <name>mgd-slider.js</name>
+                <priority>6</priority>
+                <position>body</position>
+            </file>
+        </JS>
+    </Install>
+</jtlshopplugin>
