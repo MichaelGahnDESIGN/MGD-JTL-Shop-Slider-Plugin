@@ -58,11 +58,12 @@ Es gibt nie einen Artikel ohne Bild, nie einen nicht lieferbaren Artikel und nie
 - Plugin lässt sich installieren und aktivieren, Tabelle wird angelegt, Portlet wird registriert.
 - Slider anlegen, ändern, löschen. Limit von 5. Alles per Test-Skript `tests/smoke-jtl.php`.
 - Prime-Abfrage mit allen 4 Quellen gegen die echten Demo-Artikel.
-- Slider-Skript im Browser (schmal und breit): Tastatur, Pausenknopf, reduzierte Bewegung.
+- Echtes Shop-Frontend im Browser (Startseite mit Portlet, Theme MichaThemeV5, 375 und 1280 Pixel breit): Slider klassisch und Prime werden angezeigt, Plugin-CSS und -JS sind eingebunden, Tastatur, Pausenknopf und Pfeile funktionieren, kein seitliches Scrollen.
+- Reduzierte Bewegung: im Browser nur simuliert (nicht über die System-Einstellung).
 
 ☑️ Noch nicht geprüft:
 
-- Die Seite im echten Shop-Frontend im Browser. Der Demo-Shop war im Wartungsmodus (nur mit Backend-Login sichtbar).
+- Andere Templates als MichaThemeV5 (zum Beispiel reines NOVA).
 - Der Admin-Reiter im Browser (dafür ist ein Backend-Login nötig). Nur der Code dahinter ist getestet.
 - Das Platzieren im OPC-Editor mit der Maus.
 - Andere JTL-Versionen als 5.8.2.

@@ -10,7 +10,7 @@
 - info.xml bereinigt (MinShopVersion 5.8.2, XMLVersion 100), nicht benötigtes Skript `mgd-slider-model.js` entfernt.
 - Button-Höhe im Slider korrigiert.
 - Test-Skript `tests/smoke-jtl.php` für den Shop.
-- Noch offen: Lizenzcode-Prüfung (Pro), Browser-Test im Shop-Frontend und im Backend-Reiter, andere JTL-Versionen.
+- Im echten Shop-Frontend geprüft (Browser, schmal und breit). Noch offen: Lizenzcode-Prüfung (Pro), Browser-Test im Backend-Reiter und im OPC-Editor, andere JTL-Versionen.
 
 ## 0.1.0 Gerüst (intern, nicht veröffentlicht)
 
