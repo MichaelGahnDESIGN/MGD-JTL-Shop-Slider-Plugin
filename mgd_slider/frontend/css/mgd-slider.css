@@ -32,13 +32,13 @@
 .mgd-slide__title { margin: 0; font-size: clamp(1.25rem, 3vw, 2.25rem); font-weight: 700; line-height: 1.15; max-width: 40ch; }
 .mgd-slide__text { margin: 0; font-size: clamp(1rem, 1.6vw, 1.125rem); max-width: 60ch; font-variant-numeric: tabular-nums; }
 .mgd-slide__btn {
-  display: inline-block; min-height: 44px; padding: .65rem 1.25rem; border-radius: var(--mt-r, 8px); font-weight: 700; text-decoration: none;
+  display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; padding: .65rem 1.25rem; border-radius: var(--mt-r, 8px); font-weight: 700; text-decoration: none;
   background: var(--mgd-accent-c); color: var(--mgd-on-accent-c); border: 1px solid transparent;
 }
 .mgd-slide__btn:hover { filter: brightness(.92); }
 .mgd-slide__btn:focus-visible { outline: 2px solid #fff; outline-offset: 2px; box-shadow: 0 0 0 4px #000; }
 
-/* Pfeile */
+/* Pfeile  */
 .mgd-slider__nav {
   position: absolute; top: 50%; transform: translateY(-50%); z-index: 2; width: 44px; height: 44px; padding: 0; display: grid; place-items: center;
   border-radius: 50%; border: 1px solid var(--mgd-border-c); background: var(--mgd-surface-c); color: var(--mgd-text-c); cursor: pointer;

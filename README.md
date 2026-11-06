@@ -1,36 +1,84 @@
-# MGD JTL-Shop 5 Slider Plugin
+# MGD Slider für JTL-Shop 5
 
-> Pre-Alpha 0.1.0. Das Plugin ist ein frühes Gerüst. Es ist noch nicht für echte Shops gedacht.
+> Pre-Release 0.1.0. Läuft im JTL-Shop 5.8.2 (Demo-Shop). Andere Versionen sind nicht getestet.
 
-Ein "Super-Slider" für JTL-Shop 5 von Michael Gahn DESIGN. Zwei Arten:
+Mit diesem Plugin baust du einen Bild-Slider für deinen JTL-Shop. Es gibt zwei Arten:
 
-- **Klassisch:** Du legst Slides selbst an (nur Bild oder Bild mit Text und Button).
-- **Prime:** Die Slides entstehen automatisch aus deinen Shop-Artikeln. Du stellst nur ein, wie viele Slides es sein sollen. Quelle: zufällig, meistverkauft, Kategorie oder manuell (du wählst Artikel, daraus wird zufällig gezeigt).
+- **Klassisch:** Du legst die Slides selbst an. Eine Slide ist ein Bild, optional mit Titel, Text und Button.
+- **Prime:** Die Slides entstehen von allein aus deinen Shop-Artikeln. Du sagst nur, woher die Artikel kommen und wie viele Slides es sein sollen.
+  - Zufällig
+  - Meistverkauft (gibt es noch keine Verkäufe, werden zufällige Artikel genommen)
+  - Aus Kategorien (Unterkategorien zählen mit)
+  - Manuell: Du nennst Artikel-ID oder Artikelnummer, daraus wird zufällig gewählt
 
-In der kostenlosen Version kannst du bis zu 5 Slider anlegen. Mit einer Pro-Lizenz sind es unbegrenzt viele.
+Es gibt nie einen Artikel ohne Bild, nie einen nicht lieferbaren Artikel und nie ein Variations-Kind.
 
-## Was schon geht und was nicht
+## Kostenlos und Pro
 
-- ☑️ Nur Syntax geprüft (php -l, xmllint). Noch nie in einem echten JTL-Shop gelaufen.
-- ☑️ Enthalten: info.xml, Admin-Tabs, Tabelle, Limit-Prüfung, OPC-Portlet (Struktur nach Doku, zu prüfen).
-- ☑️ Prime liefert noch keine Artikel (Datenabfrage ist ein Platzhalter), Slides lassen sich noch nicht bearbeiten.
+- Kostenlos: bis zu **5 Slider**. Beim 6. Slider kommt die Meldung "Das Limit von 5 Slidern ist erreicht. Mit einer Pro-Lizenz sind es unbegrenzt viele."
+- Pro: unbegrenzt viele Slider. ☑️ Die Prüfung des Lizenzcodes ist in dieser Version noch nicht eingebaut.
 
 ## Installation, Schritt für Schritt
 
-1. Ordner `mgd_slider` nach `<Shop>/plugins/` kopieren.
-2. Im JTL-Backend unter Plugins: Plugin installieren und aktivieren.
-3. Im OPC-Editor das Portlet "MGD Slider" nutzen. (Pre-Alpha: noch ungetestet)
+1. Lade die Datei `mgd_slider-0.1.0.zip` von der Release-Seite herunter.
+2. Melde dich im JTL-Shop-Backend an.
+3. Gehe zu **Plugins > Plugin-Verwaltung**.
+4. Wähle **Hochladen** und nimm die ZIP-Datei. (Alternativ: den Ordner `mgd_slider` per FTP nach `<Shop>/plugins/` kopieren.)
+5. Gehe auf den Reiter **Vorhanden**, setze bei "MGD Slider" ein Häkchen und klicke auf **Installieren**.
+6. Wechsle auf den Reiter **Aktiviert/Installiert** und aktiviere das Plugin.
 
-## Slider-Regeln für Barrierefreiheit
+## Einen Slider anlegen
 
-- Es gibt einen Pausenknopf, sobald sich der Slider von selbst bewegt.
-- Bedienung mit Tastatur: Pfeiltasten links und rechts, Pos1 und Ende.
-- Wer "Bewegung reduzieren" im System eingestellt hat, bekommt keinen automatischen Wechsel.
-- Keine externen Schriften und kein CDN: Alles liegt im Plugin (Datenschutz).
+1. Backend > Plugins > "MGD Slider" > Reiter **Slider**.
+2. Klicke auf **Neuen Slider anlegen**.
+3. Gib einen Namen ein und wähle **Klassisch** oder **Prime**.
+4. Klassisch: Trage in den Zeilen Bild, Alt-Text, Titel, Text und Button ein. Leere Zeilen werden ignoriert.
+5. Prime: Wähle die Quelle und die Anzahl.
+6. Klicke auf **Speichern**.
 
-## Aufbau (Kurzfassung)
+## Slider auf einer Seite zeigen
 
-Der Kern (Slider-Skript, Stil, Auswahl-Logik) ist auf allen Plattformen gleich und wird aus einem gemeinsamen Quellordner erzeugt. Nur die Anbindung an JTL-Shop 5 ist je Plattform anders. Den ganzen Plan gibt es im privaten Hauptprojekt (docs/SLIDER-PLUGINS.md).
+1. Öffne die Seite im OPC-Editor (Online-Page-Composer).
+2. Ziehe das Portlet **MGD Slider** in einen Bereich.
+3. Wähle im Portlet deinen Slider aus.
+4. Speichere und veröffentliche die Seite.
+
+## Barrierefreiheit
+
+- Mit der Tastatur: Pfeil links und rechts, Pos1 und Ende. Die Pfeile, Punkte und der Pausenknopf sind echte Knöpfe mit Beschriftung.
+- Wechselt der Slider von selbst, gibt es einen Pausenknopf. Der Wechsel stoppt auch bei Maus darüber und bei Tastatur-Fokus.
+- Wer im System "Bewegung reduzieren" eingestellt hat, bekommt keinen automatischen Wechsel und keine Animation.
+- Nicht sichtbare Slides sind für Screenreader und Tab-Taste gesperrt.
+- Keine externen Schriften und kein CDN. Alles liegt im Plugin.
+
+## Was geprüft ist und was nicht
+
+✅ Geprüft im Demo-Shop (JTL-Shop 5.8.2):
+
+- Plugin lässt sich installieren und aktivieren, Tabelle wird angelegt, Portlet wird registriert.
+- Slider anlegen, ändern, löschen. Limit von 5. Alles per Test-Skript `tests/smoke-jtl.php`.
+- Prime-Abfrage mit allen 4 Quellen gegen die echten Demo-Artikel.
+- Slider-Skript im Browser (schmal und breit): Tastatur, Pausenknopf, reduzierte Bewegung.
+
+☑️ Noch nicht geprüft:
+
+- Die Seite im echten Shop-Frontend im Browser. Der Demo-Shop war im Wartungsmodus (nur mit Backend-Login sichtbar).
+- Der Admin-Reiter im Browser (dafür ist ein Backend-Login nötig). Nur der Code dahinter ist getestet.
+- Das Platzieren im OPC-Editor mit der Maus.
+- Andere JTL-Versionen als 5.8.2.
+- Lizenzcode-Prüfung für Pro.
+
+## Entwicklung
+
+Der Kern (`src/Core`: Slider-Daten, Auswahl, HTML) ist auf allen Plattformen gleich und wird aus einem gemeinsamen Quellordner erzeugt. Nur die Anbindung an JTL (`Bootstrap.php`, `src/AdminPage.php`, `src/PrimeCandidates.php`, `Portlets/`) ist hier von Hand geschrieben.
+
+Test im Shop (auf dem Server, per CLI):
+
+```
+php tests/smoke-jtl.php /pfad/zum/shop https://shop-adresse
+```
+
+Das Skript legt Test-Slider an und räumt sie wieder auf.
 
 ## Hilfe und Fehler melden
 

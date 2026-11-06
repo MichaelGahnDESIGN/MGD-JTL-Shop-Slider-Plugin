@@ -15,10 +15,7 @@ use Plugin\mgd_slider\PrimeCandidates;
 use Plugin\mgd_slider\SliderRepository;
 
 /**
- * OPC-Portlet "MGDSlider" - Struktur nach JTL5-Doku (Plugin\<PluginID>\Portlets\<Klasse>), UNGETESTET.
- * Zu prüfen: Methodensignaturen von Portlet (getPropertyDesc, getFinalHtml), Ablage unter Portlets/ vs. portlets/,
- * und ob der Editor preview.tpl so findet.
- * Frontend-HTML kommt komplett aus MGD\Slider\Renderer, darum gibt es keine eigene Frontend-tpl.
+ * OPC-Portlet "MGDSlider" - Slider auswählen, Ausgabe kommt komplett aus MGD\Slider\Renderer
  */
 class MGDSlider extends Portlet
 {
@@ -50,7 +47,7 @@ class MGDSlider extends Portlet
         $cfg = $slider['config'];
         $slides = $cfg['slides'];
         if ($cfg['mode'] === 'prime') {
-            $slides = Prime::select((new PrimeCandidates())->load(), $cfg);
+            $slides = Prime::select((new PrimeCandidates(Shop::Container()->getDB()))->load($cfg), $cfg);
         }
         // uid mit Instanz, damit derselbe Slider mehrfach auf einer Seite geht
         $uid = $id . '-' . substr(md5(spl_object_hash($instance)), 0, 6);

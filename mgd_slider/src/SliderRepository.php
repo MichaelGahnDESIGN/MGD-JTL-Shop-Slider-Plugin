@@ -10,8 +10,7 @@ use MGD\Slider\Limits;
 use RuntimeException;
 
 /**
- * Zugriff auf xplugin_mgd_slider. DbInterface-Methoden (getObjects, getSingleObject, insert, update, delete)
- * nach JTL5 - ungetestet, zu prüfen.
+ * Zugriff auf xplugin_mgd_slider (JTL DbInterface)
  */
 final class SliderRepository
 {
@@ -58,9 +57,10 @@ final class SliderRepository
      * @param array<string,mixed> $rawConfig
      * @throws RuntimeException wenn das Limit erreicht ist
      */
-    public function create(string $name, array $rawConfig = []): int
+    public function create(string $name, array $rawConfig = [], bool $unlimited = false): int
     {
-        if (!Limits::canCreate($this->count())) {
+        // Slider Grenze Free, Pro (unlimited) kommt später mit Lizenzprüfung
+        if (!$unlimited && !Limits::canCreate($this->count())) {
             throw new RuntimeException(Limits::reachedMessage());
         }
         $now = date('Y-m-d H:i:s');

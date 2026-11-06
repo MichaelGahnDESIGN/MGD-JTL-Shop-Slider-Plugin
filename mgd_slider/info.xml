@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jtlshopplugin>
     <Name>MGD Slider</Name>
-    <Description>Slider für JTL-Shop 5 (Pre-Alpha, nicht für Live-Shops)</Description>
+    <Description>Slider für JTL-Shop 5: klassisch mit eigenen Slides oder Prime mit Slides automatisch aus Shop-Artikeln. Barrierefrei bedienbar. Pre-Release, bisher nur mit JTL-Shop 5.8.2 getestet.</Description>
     <Author>Michael Gahn DESIGN</Author>
     <URL>https://themes.michael-gahn.de</URL>
     <PluginID>mgd_slider</PluginID>
-    <XMLVersion>102</XMLVersion>
-    <ShopVersion>5.0.0</ShopVersion>
-    <CreateDate>2026-10-28</CreateDate>
+    <XMLVersion>100</XMLVersion>
+    <MinShopVersion>5.8.2</MinShopVersion>
+    <CreateDate>2026-11-06</CreateDate>
     <Version>0.1.0</Version>
     <Install>
         <FlushTags>CACHING_GROUP_TEMPLATE,CACHING_GROUP_PLUGIN</FlushTags>
@@ -35,13 +35,8 @@
         </CSS>
         <JS>
             <file>
-                <name>mgd-slider-model.js</name>
-                <priority>5</priority>
-                <position>body</position>
-            </file>
-            <file>
                 <name>mgd-slider.js</name>
-                <priority>6</priority>
+                <priority>5</priority>
                 <position>body</position>
             </file>
         </JS>
