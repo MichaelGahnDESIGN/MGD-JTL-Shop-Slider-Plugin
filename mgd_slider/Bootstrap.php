@@ -7,6 +7,7 @@ namespace Plugin\mgd_slider;
 use JTL\Events\Dispatcher;
 use JTL\Helpers\Form;
 use JTL\Plugin\Bootstrapper;
+use JTL\Shop;
 use JTL\Smarty\JTLSmarty;
 
 /**
@@ -25,6 +26,9 @@ final class Bootstrap extends Bootstrapper
         require_once __DIR__ . '/src/SliderRepository.php';
         require_once __DIR__ . '/src/PrimeCandidates.php';
         require_once __DIR__ . '/src/AdminPage.php';
+        // Update Client Autoload
+        require_once __DIR__ . '/src/UpdateTab.php';
+        UpdateTab::registerAutoload();
     }
 
     public function uninstalled(bool $deleteData = true): void
@@ -35,12 +39,13 @@ final class Bootstrap extends Bootstrapper
         }
     }
 
-    /** Admin-Tabs "Slider" und "Lizenzen" */
+    /** Admin-Tabs "Slider", "Lizenzen" und "Updates" */
     public function renderAdminMenuTab(string $tabName, int $menuID, JTLSmarty $smarty): string
     {
         return match ($tabName) {
             'Slider' => $this->sliderTab(),
             'Lizenzen' => $this->licenseTab(),
+            'Updates' => $this->updatesTab(),
             default => '',
         };
     }
@@ -53,6 +58,26 @@ final class Bootstrap extends Bootstrapper
 
         // Token nur bei Speichern/Löschen prüfne
         return $page->render($_POST, $_GET, Form::getTokenInput(), $isPost ? Form::validateToken() : true);
+    }
+
+    private function updatesTab(): string
+    {
+        // Updates Menue
+        $tab = new UpdateTab(
+            // Datenordner ausserhalb Web (templates_c, mit Deny)
+            rtrim((defined('PFAD_ROOT') ? PFAD_ROOT : '') . (defined('PFAD_COMPILEDIR') ? PFAD_COMPILEDIR : 'templates_c/'), '/') . '/mgd_slider_update',
+            // Version kommt aus info.xml via Plugin-Objekt
+            $this->getPlugin()->getMeta()->getVersion(),
+            (string) parse_url(Shop::getURL(), PHP_URL_HOST),
+            defined('APPLICATION_VERSION') ? (string) APPLICATION_VERSION : '',
+            // CSRF Check
+            static fn (): bool => (bool) Form::validateToken(),
+            // Rechte
+            static fn (): bool => (bool) Shop::Container()->getAdminAccount()->permission('PLUGIN_ADMIN_VIEW'),
+            Form::getTokenInput(),
+        );
+
+        return $tab->render((string) ($_SERVER['REQUEST_METHOD'] ?? 'GET'), $_POST);
     }
 
     private function licenseTab(): string

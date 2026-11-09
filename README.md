@@ -27,6 +27,28 @@ Es gibt nie einen Artikel ohne Bild, nie einen nicht lieferbaren Artikel und nie
 5. Gehe auf den Reiter **Vorhanden**, setze bei "MGD Slider" ein Häkchen und klicke auf **Installieren**.
 6. Wechsle auf den Reiter **Aktiviert/Installiert** und aktiviere das Plugin.
 
+## Updates
+
+Im Plugin gibt es den Reiter **Updates**. Dort siehst du, ob es eine neue Version gibt.
+
+So geht es, Schritt für Schritt:
+
+1. Backend > Plugins > "MGD Slider" > Reiter **Updates**.
+2. Setze das Häkchen **Update-Prüfung einschalten** und klicke auf **Speichern**. Ohne Häkchen ruft das Plugin nichts ab.
+3. Oder klicke einfach auf **Jetzt nach Updates suchen**. Das gilt nur für diesen einen Abruf.
+4. Gibt es ein Update, setze das Häkchen bei der Bestätigung und lade das Paket herunter. Das Plugin prüft es (Signatur, Prüfsumme, Inhalt).
+5. Speichere die geprüfte ZIP-Datei. Mache vorher eine Datensicherung.
+6. Lade die ZIP in der **JTL-Plugin-Verwaltung** hoch. JTL macht das Update.
+
+Wichtig:
+
+- Das Plugin installiert **nie** selbst. Es tauscht keine Dateien aus und aktiviert nichts.
+- Beim Prüfen sieht der Update-Server die IP-Adresse deines Servers. Es werden keine Besucher-, Kunden- oder Bestelldaten gesendet.
+- Der Zustand liegt in `<Shop>/templates_c/mgd_slider_update/` (mit Zugriffssperre für Apache; bei nginx bitte den Ordner selbst sperren).
+- ⚠️ Noch nicht aktiv: Der Update-Kanal ist noch nicht eingerichtet (Blocker B1: Schlüsselzeremonie fehlt). Das Plugin meldet dann "Update-Kanal noch nicht eingerichtet" und ruft nichts ab.
+- ⚠️ Der Update-Server kennt das Produkt `mgd-slider` noch nicht (Blocker B2). Bis dahin findet der Client keine Updates.
+- Details zum Update-Client: `docs/JTL-UPDATE-CLIENT.md` im Pro-Repository.
+
 ## Einen Slider anlegen
 
 1. Backend > Plugins > "MGD Slider" > Reiter **Slider**.
@@ -80,6 +102,14 @@ php tests/smoke-jtl.php /pfad/zum/shop https://shop-adresse
 ```
 
 Das Skript legt Test-Slider an und räumt sie wieder auf.
+
+Test für den Reiter Updates (ohne JTL, ohne Netz):
+
+```
+php tests/update-smoke.php
+```
+
+Der Update-Client in `src/Update` wird vom Generator erzeugt (`bin/build-update-client.php` im Pro-Repository). Bitte nicht von Hand ändern.
 
 ## Hilfe und Fehler melden
 

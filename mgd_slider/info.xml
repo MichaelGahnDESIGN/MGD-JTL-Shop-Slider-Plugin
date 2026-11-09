@@ -18,6 +18,9 @@
             <Customlink sort="2">
                 <Name>Lizenzen</Name>
             </Customlink>
+            <Customlink sort="3">
+                <Name>Updates</Name>
+            </Customlink>
         </Adminmenu>
         <Portlets>
             <Portlet>

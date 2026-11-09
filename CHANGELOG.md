@@ -1,5 +1,12 @@
 # Änderungen
 
+## Unveröffentlicht
+
+- Neuer Reiter "Updates" im Backend (MGD Update Client). Update prüfen, Paket herunterladen und prüfen, dann in der JTL-Plugin-Verwaltung installieren. Das Plugin installiert nie selbst.
+- Update-Prüfung nur nach Einschalten oder Klick, nur mit Rechten und CSRF-Token.
+- Noch ohne Wirkung: Update-Kanal nicht eingerichtet (Blocker B1) und Produkt `mgd-slider` beim Server noch unbekannt (Blocker B2).
+- Neues Test-Skript `tests/update-smoke.php`.
+
 ## 0.1.0 (Pre-Release)
 
 - Läuft im JTL-Shop 5.8.2 (Demo-Shop): installieren, aktivieren, Slider anlegen und ausgeben.
