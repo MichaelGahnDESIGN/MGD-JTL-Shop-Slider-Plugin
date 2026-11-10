@@ -18,6 +18,8 @@ final class UpdateTab
     public const PLUGIN_NAME = 'MGD Slider';
     // Free, Pro-Limit-Lizenz gibt es für JTL noch nicht > NullLicenseProvider (Standard in Factory)
     public const EDITION = 'free';
+    // Prüfsummen-Datei auf All-Inkl - einfacher Modus ohne Schlüssel
+    public const SIMPLE_URL = 'https://theme.michael-gahn.de/plugin-updates/mgd-slider.json';
 
     /** @var callable():bool */
     private $csrfValid;
@@ -78,6 +80,9 @@ final class UpdateTab
                 $this->csrfValid,
                 $this->canManage,
                 $this->csrfField,
+                null,
+                ['info.xml'],
+                self::SIMPLE_URL,
             );
         } catch (InvalidArgumentException | \RuntimeException $e) {
             // Version oder Datenordner kaputt

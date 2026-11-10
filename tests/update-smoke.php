@@ -57,8 +57,13 @@ $check('Datenordner: index.html', is_file($tmp . '/index.html'));
 // Einschalten mit Token, dann leere Root-Keys = Kanal nicht eingerichtet (B1)
 $make($tmp, true, true)->render('POST', ['mgd_update_action' => 'save_settings', 'checks_enabled' => '1']);
 $check('Einstellung mit CSRF gespeichert', str_contains((string) file_get_contents($stateFile), '"enabled":true'));
-$html = $make($tmp, true, true)->render('POST', ['mgd_update_action' => 'check_now']);
+// direkt über die Factory ohne Prüfsummen-Adresse, sonst ginge der Test ins Netz
+$bare = \Plugin\mgd_slider\Update\Factory::page(__DIR__ . '/../mgd_slider/update/root-keys.json', $tmp, UpdateTab::PRODUCT, UpdateTab::EDITION, UpdateTab::PLUGIN_NAME, '0.1.0', 'shop.example.test', '5.8.2', static fn (): bool => true, static fn (): bool => true, '');
+$html = $bare->handle('POST', ['mgd_update_action' => 'check_now'])['html'];
 $check('B1: ohne Root-Keys kein Update (nicht eingerichtet)', stripos($html, 'nicht eingerichtet') !== false);
+// einfacher Modus verdrahtet, nur statisch geprüft
+$check('einfacher Modus: Adresse der Prüfsummen-Datei', UpdateTab::SIMPLE_URL === 'https://theme.michael-gahn.de/plugin-updates/mgd-slider.json');
+$check('einfacher Modus: UpdateTab gibt die Adresse weiter', str_contains((string) file_get_contents(__DIR__ . '/../mgd_slider/src/UpdateTab.php'), "['info.xml'],\n                self::SIMPLE_URL"));
 
 // Anzeige escaped
 file_put_contents($stateFile, json_encode(['enabled' => true, 'last_check' => time(), 'last_result' => ['status' => 'up_to_date', 'message' => '<script>alert(1)</script>']]));

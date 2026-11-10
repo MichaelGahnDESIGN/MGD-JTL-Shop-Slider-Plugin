@@ -45,8 +45,7 @@ Wichtig:
 - Das Plugin installiert **nie** selbst. Es tauscht keine Dateien aus und aktiviert nichts.
 - Beim Prüfen sieht der Update-Server die IP-Adresse deines Servers. Es werden keine Besucher-, Kunden- oder Bestelldaten gesendet.
 - Der Zustand liegt in `<Shop>/templates_c/mgd_slider_update/` (mit Zugriffssperre für Apache; bei nginx bitte den Ordner selbst sperren).
-- ⚠️ Noch nicht aktiv: Der Update-Kanal ist noch nicht eingerichtet (Blocker B1: Schlüsselzeremonie fehlt). Das Plugin meldet dann "Update-Kanal noch nicht eingerichtet" und ruft nichts ab.
-- ⚠️ Der Update-Server kennt das Produkt `mgd-slider` noch nicht (Blocker B2). Bis dahin findet der Client keine Updates.
+- ⚠️ Der Update-Kanal arbeitet im einfachen Modus: Eine kleine Textdatei auf theme.michael-gahn.de (`plugin-updates/mgd-slider.json`) nennt Version und SHA-256-Prüfsumme, das ZIP kommt von GitHub, die Prüfsumme wird beim Download nachgerechnet. Das ist eine Prüfsumme, keine Signatur. Solange die Textdatei noch nicht auf dem Server liegt, meldet der Bereich nur einen Fehler beim Abruf. Sonst passiert nichts.
 - Details zum Update-Client: `docs/JTL-UPDATE-CLIENT.md` im Pro-Repository.
 
 ## Einen Slider anlegen
