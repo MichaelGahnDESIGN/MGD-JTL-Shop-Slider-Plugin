@@ -11,7 +11,7 @@ use JTL\Shop;
 use JTL\Smarty\JTLSmarty;
 
 /**
- * MGD Slider für JTL-Shop 5 - Pre-Release 0.1.0 (getestet nur mit JTL-Shop 5.8.2)
+ * MGD Slider für JTL-Shop 5 - Pre-Release 0.1.1 (getestet nur mit JTL-Shop 5.8.2)
  */
 final class Bootstrap extends Bootstrapper
 {

@@ -1,6 +1,6 @@
 # MGD Slider für JTL-Shop 5
 
-> Pre-Release 0.1.0. Läuft im JTL-Shop 5.8.2 (Demo-Shop). Andere Versionen sind nicht getestet.
+> Pre-Release 0.1.1. Läuft im JTL-Shop 5.8.2 (Demo-Shop). Andere Versionen sind nicht getestet.
 
 Mit diesem Plugin baust du einen Bild-Slider für deinen JTL-Shop. Es gibt zwei Arten:
 
@@ -20,7 +20,7 @@ Es gibt nie einen Artikel ohne Bild, nie einen nicht lieferbaren Artikel und nie
 
 ## Installation, Schritt für Schritt
 
-1. Lade die Datei `mgd_slider-0.1.0.zip` von der Release-Seite herunter.
+1. Lade die Datei `mgd_slider-0.1.1.zip` von der Release-Seite herunter.
 2. Melde dich im JTL-Shop-Backend an.
 3. Gehe zu **Plugins > Plugin-Verwaltung**.
 4. Wähle **Hochladen** und nimm die ZIP-Datei. (Alternativ: den Ordner `mgd_slider` per FTP nach `<Shop>/plugins/` kopieren.)
@@ -45,7 +45,7 @@ Wichtig:
 - Das Plugin installiert **nie** selbst. Es tauscht keine Dateien aus und aktiviert nichts.
 - Beim Prüfen sieht der Update-Server die IP-Adresse deines Servers. Es werden keine Besucher-, Kunden- oder Bestelldaten gesendet.
 - Der Zustand liegt in `<Shop>/templates_c/mgd_slider_update/` (mit Zugriffssperre für Apache; bei nginx bitte den Ordner selbst sperren).
-- ⚠️ Der Update-Kanal arbeitet im einfachen Modus: Eine kleine Textdatei auf theme.michael-gahn.de (`plugin-updates/mgd-slider.json`) nennt Version und SHA-256-Prüfsumme, das ZIP kommt von GitHub, die Prüfsumme wird beim Download nachgerechnet. Das ist eine Prüfsumme, keine Signatur. Solange die Textdatei noch nicht auf dem Server liegt, meldet der Bereich nur einen Fehler beim Abruf. Sonst passiert nichts.
+- ⚠️ Der Update-Kanal arbeitet im einfachen Modus: Eine kleine Textdatei auf theme.michael-gahn.de (`plugin-updates/mgd-slider.json`) nennt Version und SHA-256-Prüfsumme, das ZIP kommt von GitHub, die Prüfsumme wird beim Download nachgerechnet. Das ist eine Prüfsumme, keine Signatur.
 - Details zum Update-Client: `docs/JTL-UPDATE-CLIENT.md` im Pro-Repository.
 
 ## Einen Slider anlegen
