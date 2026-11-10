@@ -1,5 +1,12 @@
 # Änderungen
 
+## 0.1.1 (Pre-Release)
+
+- Neuer Reiter "Updates" im Backend (MGD Update Client). Update prüfen, Paket herunterladen und prüfen, dann in der JTL-Plugin-Verwaltung installieren. Das Plugin installiert nie selbst.
+- Update-Prüfung nur nach Einschalten oder Klick, nur mit Rechten und CSRF-Token.
+- Der Update-Kanal arbeitet im einfachen Modus: Eine kleine Textdatei auf theme.michael-gahn.de (`plugin-updates/mgd-slider.json`) nennt Version und SHA-256-Prüfsumme, das ZIP kommt von GitHub, die Prüfsumme wird beim Download nachgerechnet. Das ist eine Prüfsumme, keine Signatur.
+- Neues Test-Skript `tests/update-smoke.php`.
+
 ## 0.1.0 (Pre-Release)
 
 - Läuft im JTL-Shop 5.8.2 (Demo-Shop): installieren, aktivieren, Slider anlegen und ausgeben.

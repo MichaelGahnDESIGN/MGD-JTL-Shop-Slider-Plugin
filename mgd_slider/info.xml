@@ -8,7 +8,7 @@
     <XMLVersion>100</XMLVersion>
     <MinShopVersion>5.8.2</MinShopVersion>
     <CreateDate>2026-11-06</CreateDate>
-    <Version>0.1.0</Version>
+    <Version>0.1.1</Version>
     <Install>
         <FlushTags>CACHING_GROUP_TEMPLATE,CACHING_GROUP_PLUGIN</FlushTags>
         <Adminmenu>
@@ -17,6 +17,9 @@
             </Customlink>
             <Customlink sort="2">
                 <Name>Lizenzen</Name>
+            </Customlink>
+            <Customlink sort="3">
+                <Name>Updates</Name>
             </Customlink>
         </Adminmenu>
         <Portlets>
