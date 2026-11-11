@@ -1,5 +1,11 @@
 # Änderungen
 
+## 0.1.2 (Pre-Release)
+
+- Wartungs-Release: Der Update-Client-Zweig ist jetzt in `main`. Am Slider selbst hat sich nichts geändert.
+- Im Demo-Shop eingespielt. Dort wird damit auch der Weg von 0.1.0 auf die neue Version mit der Update-Anzeige geprüft.
+- Tests: `tests/update-smoke.php` grün, keine PHP-Syntaxfehler.
+
 ## 0.1.1 (Pre-Release)
 
 - Neuer Reiter "Updates" im Backend (MGD Update Client). Update prüfen, Paket herunterladen und prüfen, dann in der JTL-Plugin-Verwaltung installieren. Das Plugin installiert nie selbst.
