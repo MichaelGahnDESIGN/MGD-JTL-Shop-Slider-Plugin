@@ -1,5 +1,12 @@
 # Änderungen
 
+## 0.1.3
+
+- Update Client neu erzeugt (aus MichaThemeV5-Pro): Der veraltete Aufruf `curl_close()` ist entfernt. Unter PHP 8.5 gab er bei jeder Update-Prüfung eine Deprecated-Warnung.
+- Generator im Pro-Repo mit dem Plugin abgeglichen: Button-Höhe im Kern-CSS übernommen, das nicht benötigte `mgd-slider-model.js` kommt nicht mehr ins JTL-Paket. Das Plugin selbst bleibt dabei gleich.
+- Erstes Release, das der Bereich "Updates" in 0.1.2 als neue Version anzeigen kann.
+- Tests: `tests/update-smoke.php` grün, keine PHP-Syntaxfehler.
+
 ## 0.1.2 (Pre-Release)
 
 - Wartungs-Release: Der Update-Client-Zweig ist jetzt in `main`. Am Slider selbst hat sich nichts geändert.

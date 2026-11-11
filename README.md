@@ -1,6 +1,6 @@
 # MGD Slider für JTL-Shop 5
 
-> Pre-Release 0.1.2. Läuft im JTL-Shop 5.8.2 (Demo-Shop). Andere Versionen sind nicht getestet.
+> Release 0.1.3. Läuft im JTL-Shop 5.8.2 (Demo-Shop). Andere Versionen sind nicht getestet.
 
 Mit diesem Plugin baust du einen Bild-Slider für deinen JTL-Shop. Es gibt zwei Arten:
 
@@ -20,7 +20,7 @@ Es gibt nie einen Artikel ohne Bild, nie einen nicht lieferbaren Artikel und nie
 
 ## Installation, Schritt für Schritt
 
-1. Lade die Datei `mgd_slider-0.1.2.zip` von der Release-Seite herunter.
+1. Lade die Datei `mgd_slider-0.1.3.zip` von der Release-Seite herunter.
 2. Melde dich im JTL-Shop-Backend an.
 3. Gehe zu **Plugins > Plugin-Verwaltung**.
 4. Wähle **Hochladen** und nimm die ZIP-Datei. (Alternativ: den Ordner `mgd_slider` per FTP nach `<Shop>/plugins/` kopieren.)
