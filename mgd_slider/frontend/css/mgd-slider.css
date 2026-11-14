@@ -24,7 +24,7 @@
 /* Overlay Text + Button */
 .mgd-slide__overlay {
   position: absolute; inset: auto 0 0 0; padding: clamp(1rem, 4vw, 2.5rem) clamp(1rem, 6vw, 4.5rem) clamp(3rem, 6vw, 4rem);
-  background: linear-gradient(to top, var(--mgd-overlay, rgba(0, 0, 0, .72)), transparent);
+  background: linear-gradient(to top, var(--mgd-overlay, rgba(0, 0, 0, .82)) 60%, transparent); text-shadow: 0 1px 3px rgba(0, 0, 0, .6);
   color: var(--mgd-slide-text, #fff); display: flex; flex-direction: column; gap: .5rem; align-items: flex-start;
 }
 .mgd-align-center .mgd-slide__overlay { align-items: center; text-align: center; }
@@ -38,7 +38,7 @@
 .mgd-slide__btn:hover { filter: brightness(.92); }
 .mgd-slide__btn:focus-visible { outline: 2px solid #fff; outline-offset: 2px; box-shadow: 0 0 0 4px #000; }
 
-/* Pfeile  */
+/* Pfeile */
 .mgd-slider__nav {
   position: absolute; top: 50%; transform: translateY(-50%); z-index: 2; width: 44px; height: 44px; padding: 0; display: grid; place-items: center;
   border-radius: 50%; border: 1px solid var(--mgd-border-c); background: var(--mgd-surface-c); color: var(--mgd-text-c); cursor: pointer;
@@ -62,4 +62,8 @@
 .mgd-slider:not([data-mgd-ready]) .mgd-slide { flex-basis: 100%; }
 
 @media (prefers-reduced-motion: reduce) { .mgd-slider__track { transition-duration: 0s !important; } }
-@media (max-width: 40rem) { .mgd-slider__nav { display: none; } }
+/* Handy: Pfeile weg (wischen), feste Höhe damit Text nicht abgeschnitten wird */
+@media (max-width: 40rem) {
+  .mgd-slider__nav { display: none; }
+  .mgd-slider__viewport { aspect-ratio: auto; height: var(--mgd-height, 22rem); }
+}

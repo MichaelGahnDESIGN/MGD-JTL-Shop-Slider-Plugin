@@ -1,5 +1,12 @@
 # Änderungen
 
+## 1.4.0
+
+- Neue Versionsnummer 1.4.0: Alle MGD-Produkte haben jetzt die gleiche Version.
+- Slider-Kern abgeglichen: Text auf dem Bild besser lesbar (stärkerer Verlauf, leichter Schatten), auf dem Handy eine feste Höhe, damit kein Text abgeschnitten wird. Beschriftungen der Knöpfe lassen sich übersetzen (sonst Deutsch).
+- Update Client neu erzeugt: Nach dem Download nennt die Meldung im einfachen Modus nur, was wirklich geprüft wurde (SHA-256-Prüfsumme und Inhalt, keine Signatur).
+- Pro-Lizenz: gibt es noch nicht, kommt als nächstes.
+
 ## 0.1.3
 
 - Update Client neu erzeugt (aus MichaThemeV5-Pro): Der veraltete Aufruf `curl_close()` ist entfernt. Unter PHP 8.5 gab er bei jeder Update-Prüfung eine Deprecated-Warnung.

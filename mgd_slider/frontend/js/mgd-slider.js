@@ -84,6 +84,9 @@
     return cfg;
   }
 
+  // Labels aus data-Attributen (Locales), sonst Deutsch
+  function label(node, key, fallback) { return node.getAttribute('data-mgd-l-' + key) || fallback; }
+
   function init(node) {
     if (!node || node.getAttribute('data-mgd-ready') === '1') { return null; }
     var cfg = readCfg(node);
@@ -103,8 +106,8 @@
     var prevBtn, nextBtn, pauseBtn, dots = [];
     if (slides.length > 1) {
       if (cfg.arrows !== false) {
-        prevBtn = el('button', 'mgd-slider__nav mgd-slider__prev', { type: 'button', 'aria-label': 'Vorherige Slide' });
-        nextBtn = el('button', 'mgd-slider__nav mgd-slider__next', { type: 'button', 'aria-label': 'Nächste Slide' });
+        prevBtn = el('button', 'mgd-slider__nav mgd-slider__prev', { type: 'button', 'aria-label': label(node, 'prev', 'Vorherige Slide') });
+        nextBtn = el('button', 'mgd-slider__nav mgd-slider__next', { type: 'button', 'aria-label': label(node, 'next', 'Nächste Slide') });
         prevBtn.innerHTML = ICON.prev; nextBtn.innerHTML = ICON.next;
         node.appendChild(prevBtn); node.appendChild(nextBtn);
       }
@@ -112,7 +115,7 @@
       if (cfg.dots !== false) {
         var list = el('div', 'mgd-slider__dots');
         slides.forEach(function (_, i) {
-          var d = el('button', 'mgd-slider__dot', { type: 'button', 'aria-label': 'Slide ' + (i + 1) + ' anzeigen' });
+          var d = el('button', 'mgd-slider__dot', { type: 'button', 'aria-label': label(node, 'dot', 'Slide [[n]] anzeigen').split('[[n]]').join(String(i + 1)) });
           d.addEventListener('click', function () { show(i, true); });
           list.appendChild(d); dots.push(d);
         });
@@ -145,7 +148,7 @@
       if (pauseBtn) {
         var paused = ctl.state.userPaused;
         pauseBtn.innerHTML = paused ? ICON.play : ICON.pause;
-        pauseBtn.setAttribute('aria-label', paused ? 'Automatischen Wechsel starten' : 'Automatischen Wechsel anhalten');
+        pauseBtn.setAttribute('aria-label', paused ? label(node, 'play', 'Automatischen Wechsel starten') : label(node, 'pause', 'Automatischen Wechsel anhalten'));
         pauseBtn.setAttribute('aria-pressed', paused ? 'true' : 'false');
       }
       schedule(playing);

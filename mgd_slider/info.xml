@@ -8,7 +8,7 @@
     <XMLVersion>100</XMLVersion>
     <MinShopVersion>5.8.2</MinShopVersion>
     <CreateDate>2026-11-06</CreateDate>
-    <Version>0.1.3</Version>
+    <Version>1.4.0</Version>
     <Install>
         <FlushTags>CACHING_GROUP_TEMPLATE,CACHING_GROUP_PLUGIN</FlushTags>
         <Adminmenu>
