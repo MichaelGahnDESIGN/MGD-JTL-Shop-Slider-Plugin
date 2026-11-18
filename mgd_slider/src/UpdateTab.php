@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Plugin\mgd_slider;
 
 use InvalidArgumentException;
+use Plugin\mgd_slider\Update\Admin\InstallReporting;
 use Plugin\mgd_slider\Update\Factory;
 
 /**
@@ -42,24 +43,35 @@ final class UpdateTab
         callable $canManage,
         private readonly string $csrfField,
         ?callable $sendFile = null,
+        // Schalter Installation melden (Install-Client), null = kein Schalter
+        private readonly ?InstallReporting $install = null,
     ) {
         $this->csrfValid = $csrfValid;
         $this->canManage = $canManage;
         $this->sendFile = $sendFile ?? [self::class, 'streamZip'];
     }
 
-    // Autoload für src/Update (Plugin hat keinen eigenen)
+    private static bool $autoload = false;
+
+    // Autoload für src/Update + src/Install (Plugin hat keinen eigenen), nur 1x registrieren
     public static function registerAutoload(): void
     {
-        $prefix = __NAMESPACE__ . '\\Update\\';
-        $base = __DIR__ . '/Update/';
-        spl_autoload_register(static function (string $class) use ($prefix, $base): void {
-            if (!str_starts_with($class, $prefix)) {
+        if (self::$autoload) {
+            return;
+        }
+        self::$autoload = true;
+        $map = [__NAMESPACE__ . '\\Update\\' => __DIR__ . '/Update/', __NAMESPACE__ . '\\Install\\' => __DIR__ . '/Install/'];
+        spl_autoload_register(static function (string $class) use ($map): void {
+            foreach ($map as $prefix => $base) {
+                if (!str_starts_with($class, $prefix)) {
+                    continue;
+                }
+                $file = $base . str_replace('\\', '/', substr($class, strlen($prefix))) . '.php';
+                if (is_file($file)) {
+                    require_once $file;
+                }
+
                 return;
-            }
-            $file = $base . str_replace('\\', '/', substr($class, strlen($prefix))) . '.php';
-            if (is_file($file)) {
-                require_once $file;
             }
         });
     }
@@ -83,6 +95,7 @@ final class UpdateTab
                 null,
                 ['info.xml'],
                 self::SIMPLE_URL,
+                $this->install,
             );
         } catch (InvalidArgumentException | \RuntimeException $e) {
             // Version oder Datenordner kaputt

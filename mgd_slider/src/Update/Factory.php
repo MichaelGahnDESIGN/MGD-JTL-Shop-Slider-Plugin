@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Plugin\mgd_slider\Update;
 
-use Plugin\mgd_slider\Update\Admin\UpdatesPage;
+use Plugin\mgd_slider\Update\Admin\{InstallReporting, UpdatesPage};
 use Plugin\mgd_slider\Update\Crypto\KeyRing;
 use Plugin\mgd_slider\Update\Http\CurlHttpClient;
 use Plugin\mgd_slider\Update\License\{LicenseProvider, NullLicenseProvider};
@@ -28,6 +28,7 @@ final class Factory
         ?LicenseProvider $license = null,
         array $requiredFiles = ['info.xml'],
         ?string $simpleUrl = null,
+        ?InstallReporting $install = null,
     ): UpdatesPage {
         $raw = is_file($rootKeysFile) ? file_get_contents($rootKeysFile) : false;
         $data = is_string($raw) ? json_decode($raw, true) : null;
@@ -36,6 +37,6 @@ final class Factory
         $store = new JsonFileStateStore(rtrim($dataDir, '/') . '/state.json');
         $client = new UpdateClient($cfg, new CurlHttpClient($cfg->allowedHosts(), $cfg->userAgent()), $license ?? new NullLicenseProvider(), $store);
 
-        return new UpdatesPage($client, $store, $csrfValid, $canManage, $csrfField, $pluginName, $installedVersion);
+        return new UpdatesPage($client, $store, $csrfValid, $canManage, $csrfField, $pluginName, $installedVersion, null, $install);
     }
 }

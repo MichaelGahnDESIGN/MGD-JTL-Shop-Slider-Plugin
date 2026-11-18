@@ -9,9 +9,13 @@ use JTL\Helpers\Form;
 use JTL\Plugin\Bootstrapper;
 use JTL\Shop;
 use JTL\Smarty\JTLSmarty;
+use Plugin\mgd_slider\Install\InstallClient;
+use Plugin\mgd_slider\Install\Platform\Jtl as JtlInstall;
+use Plugin\mgd_slider\Install\Settings as InstallSettings;
+use Plugin\mgd_slider\Update\Admin\InstallReporting;
 
 /**
- * MGD Slider für JTL-Shop 5 - Release 1.4.0 (getestet nur mit JTL-Shop 5.8.2)
+ * MGD Slider für JTL-Shop 5 - Release 1.5.0 (getestet nur mit JTL-Shop 5.8.2)
  */
 final class Bootstrap extends Bootstrapper
 {
@@ -26,9 +30,32 @@ final class Bootstrap extends Bootstrapper
         require_once __DIR__ . '/src/SliderRepository.php';
         require_once __DIR__ . '/src/PrimeCandidates.php';
         require_once __DIR__ . '/src/AdminPage.php';
-        // Update Client Autoload
+        // Update + Install Client Autoload
         require_once __DIR__ . '/src/UpdateTab.php';
         UpdateTab::registerAutoload();
+        // Aktiv-Meldung max 1x am Tag, nur im Admin nie im Frontend
+        if (!Shop::isFrontend()) {
+            $this->pingInstall(false);
+        }
+    }
+
+    // Install-Meldung bei installieren / aktivieren / update
+    public function installed()
+    {
+        parent::installed();
+        $this->pingInstall(true);
+    }
+
+    public function enabled()
+    {
+        parent::enabled();
+        $this->pingInstall(true);
+    }
+
+    public function updated($oldVersion, $newVersion)
+    {
+        parent::updated($oldVersion, $newVersion);
+        $this->pingInstall(true);
     }
 
     public function uninstalled(bool $deleteData = true): void
@@ -63,9 +90,17 @@ final class Bootstrap extends Bootstrapper
     private function updatesTab(): string
     {
         // Updates Menue
+        $ic = $this->installClient();
+        // Schalter "Installation melden" auf der Update-Seite
+        $install = $ic === null ? null : new InstallReporting(
+            static fn () => $ic->ping(),
+            static fn (): bool => $ic->isEnabled(),
+            static fn (bool $on) => $ic->setEnabled($on),
+            static fn (): string => $ic->status(),
+            InstallSettings::HINT,
+        );
         $tab = new UpdateTab(
-            // Datenordner ausserhalb Web (templates_c, mit Deny)
-            rtrim((defined('PFAD_ROOT') ? PFAD_ROOT : '') . (defined('PFAD_COMPILEDIR') ? PFAD_COMPILEDIR : 'templates_c/'), '/') . '/mgd_slider_update',
+            self::dataDir(),
             // Version kommt aus info.xml via Plugin-Objekt
             $this->getPlugin()->getMeta()->getVersion(),
             (string) parse_url(Shop::getURL(), PHP_URL_HOST),
@@ -75,9 +110,40 @@ final class Bootstrap extends Bootstrapper
             // Rechte
             static fn (): bool => (bool) Shop::Container()->getAdminAccount()->permission('PLUGIN_ADMIN_VIEW'),
             Form::getTokenInput(),
+            null,
+            $install,
         );
 
         return $tab->render((string) ($_SERVER['REQUEST_METHOD'] ?? 'GET'), $_POST);
+    }
+
+    // Datenordner ausserhalb Web (templates_c, mit Deny) - Update + Install teilen sich den
+    private static function dataDir(): string
+    {
+        return rtrim((defined('PFAD_ROOT') ? PFAD_ROOT : '') . (defined('PFAD_COMPILEDIR') ? PFAD_COMPILEDIR : 'templates_c/'), '/') . '/mgd_slider_update';
+    }
+
+    // null = Produkt/System ungültig > dann gar keine Meldung
+    private function installClient(): ?InstallClient
+    {
+        try {
+            // bei installed() lief boot() evtl. noch nicht > Autoload sicherstellen
+            require_once __DIR__ . '/src/UpdateTab.php';
+            UpdateTab::registerAutoload();
+
+            return JtlInstall::client(self::dataDir(), UpdateTab::PRODUCT, $this->getPlugin()->getMeta()->getVersion());
+        } catch (\Throwable) {
+            return null;
+        }
+    }
+
+    // darf nie die Installation oder den Shop kaputt machen
+    private function pingInstall(bool $force): void
+    {
+        try {
+            $this->installClient()?->ping($force);
+        } catch (\Throwable) {
+        }
     }
 
     private function licenseTab(): string

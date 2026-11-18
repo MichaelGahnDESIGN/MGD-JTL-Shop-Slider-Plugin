@@ -1,5 +1,13 @@
 # Änderungen
 
+## 1.5.0
+
+- Neu: Install-Meldung (Free-Lizenz). Meldet sich höchstens einmal am Tag bei theme.michael-gahn.de (Plugin, Version, Shopsystem, Domain, zufällige ID). Abschaltbar in den Einstellungen.
+- Gemeldet wird beim Installieren, Aktivieren und Aktualisieren, danach höchstens einmal am Tag im Admin. Im Shop-Frontend wird nie gemeldet.
+- Der Schalter steht im Reiter „Updates“. Die Meldung läuft auch, wenn die Update-Prüfung aus ist. Abgeschaltet wird der Eintrag auf der Plattform gelöscht.
+- Der Slider läuft immer voll weiter, auch ohne Plattform.
+- Update Client neu erzeugt (mit Schalter für die Install-Meldung). Neuer Test: `tests/install-smoke.php`.
+
 ## 1.4.0
 
 - Neue Versionsnummer 1.4.0: Alle MGD-Produkte haben jetzt die gleiche Version.
