@@ -15,7 +15,7 @@ use Plugin\mgd_slider\Install\Settings as InstallSettings;
 use Plugin\mgd_slider\Update\Admin\InstallReporting;
 
 /**
- * MGD Slider für JTL-Shop 5 - Release 1.5.0 (getestet nur mit JTL-Shop 5.8.2)
+ * MGD Slider für JTL-Shop 5 - Release 1.5.1 (getestet nur mit JTL-Shop 5.8.2)
  */
 final class Bootstrap extends Bootstrapper
 {
@@ -101,8 +101,8 @@ final class Bootstrap extends Bootstrapper
         );
         $tab = new UpdateTab(
             self::dataDir(),
-            // Version kommt aus info.xml via Plugin-Objekt
-            $this->getPlugin()->getMeta()->getVersion(),
+            // Version direkt aus info.xml
+            self::fileVersion(),
             (string) parse_url(Shop::getURL(), PHP_URL_HOST),
             defined('APPLICATION_VERSION') ? (string) APPLICATION_VERSION : '',
             // CSRF Check
@@ -131,10 +131,18 @@ final class Bootstrap extends Bootstrapper
             require_once __DIR__ . '/src/UpdateTab.php';
             UpdateTab::registerAutoload();
 
-            return JtlInstall::client(self::dataDir(), UpdateTab::PRODUCT, $this->getPlugin()->getMeta()->getVersion());
+            return JtlInstall::client(self::dataDir(), UpdateTab::PRODUCT, self::fileVersion());
         } catch (\Throwable) {
             return null;
         }
+    }
+
+    // Version direkt aus der info.xml - Plugin-Objekt hat bei updated() noch die alte Version
+    public static function fileVersion(): string
+    {
+        $xml = @file_get_contents(__DIR__ . '/info.xml');
+
+        return is_string($xml) && preg_match('#<Version>\s*([0-9]+\.[0-9]+\.[0-9]+)\s*</Version>#', $xml, $m) === 1 ? $m[1] : '0.0.0';
     }
 
     // darf nie die Installation oder den Shop kaputt machen

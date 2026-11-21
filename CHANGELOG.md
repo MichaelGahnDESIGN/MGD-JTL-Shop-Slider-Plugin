@@ -1,5 +1,9 @@
 # Änderungen
 
+## 1.5.1
+
+- Fix: Beim Update hat die Install-Meldung noch die alte Versionsnummer geschickt (das Plugin-Objekt kennt in dem Moment noch die alte Version). Die Version kommt jetzt direkt aus der `info.xml`.
+
 ## 1.5.0
 
 - Neu: Install-Meldung (Free-Lizenz). Meldet sich höchstens einmal am Tag bei theme.michael-gahn.de (Plugin, Version, Shopsystem, Domain, zufällige ID). Abschaltbar in den Einstellungen.
