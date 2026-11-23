@@ -1,6 +1,6 @@
 # MGD Slider für JTL-Shop 5
 
-> Release 1.5.1. Läuft im JTL-Shop 5.8.2 (Demo-Shop). Andere Versionen sind nicht getestet.
+> Release 1.6.0. Läuft im JTL-Shop 5.8.2 (Demo-Shop). Andere Versionen sind nicht getestet.
 
 Mit diesem Plugin baust du einen Bild-Slider für deinen JTL-Shop. Es gibt zwei Arten:
 
@@ -20,7 +20,7 @@ Es gibt nie einen Artikel ohne Bild, nie einen nicht lieferbaren Artikel und nie
 
 ## Installation, Schritt für Schritt
 
-1. Lade die Datei `mgd_slider-1.5.1.zip` von der Release-Seite herunter.
+1. Lade die Datei `mgd_slider-1.6.0.zip` von der Release-Seite herunter.
 2. Melde dich im JTL-Shop-Backend an.
 3. Gehe zu **Plugins > Plugin-Verwaltung**.
 4. Wähle **Hochladen** und nimm die ZIP-Datei. (Alternativ: den Ordner `mgd_slider` per FTP nach `<Shop>/plugins/` kopieren.)
@@ -29,11 +29,11 @@ Es gibt nie einen Artikel ohne Bild, nie einen nicht lieferbaren Artikel und nie
 
 ## Updates
 
-Im Plugin gibt es den Reiter **Updates**. Dort siehst du, ob es eine neue Version gibt.
+Im Plugin gibt es den Reiter **Übersicht**. Dort steht der Bereich **Updates**. Er zeigt dir, ob es eine neue Version gibt.
 
 So geht es, Schritt für Schritt:
 
-1. Backend > Plugins > "MGD Slider" > Reiter **Updates**.
+1. Backend > Plugins > "MGD Slider" > Reiter **Übersicht**.
 2. Setze das Häkchen **Update-Prüfung einschalten** und klicke auf **Speichern**. Ohne Häkchen ruft das Plugin nichts ab.
 3. Oder klicke einfach auf **Jetzt nach Updates suchen**. Das gilt nur für diesen einen Abruf.
 4. Gibt es ein Update, setze das Häkchen bei der Bestätigung und lade das Paket herunter. Das Plugin prüft es (Signatur, Prüfsumme, Inhalt).
@@ -46,6 +46,8 @@ Wichtig:
 - Beim Prüfen sieht der Update-Server die IP-Adresse deines Servers. Es werden keine Besucher-, Kunden- oder Bestelldaten gesendet.
 - Der Zustand liegt in `<Shop>/templates_c/mgd_slider_update/` (mit Zugriffssperre für Apache; bei nginx bitte den Ordner selbst sperren).
 - ⚠️ Der Update-Kanal arbeitet im einfachen Modus: Eine kleine Textdatei auf theme.michael-gahn.de (`plugin-updates/mgd-slider.json`) nennt Version und SHA-256-Prüfsumme, das ZIP kommt von GitHub, die Prüfsumme wird beim Download nachgerechnet. Das ist eine Prüfsumme, keine Signatur.
+- Der Reiter **Weitere Plugins** zeigt andere MGD-Plugins für JTL-Shop. Es wird nichts installiert, installiert wird immer von Hand in der JTL-Pluginverwaltung.
+- Im Reiter **Übersicht** steht auch der Schalter **Installation bei Michael Gahn DESIGN melden** (ab Werk an). Das Plugin meldet sich höchstens einmal am Tag bei theme.michael-gahn.de (Plugin, Version, Shopsystem, Domain, zufällige ID). Abgeschaltet läuft der Slider genauso weiter.
 - Details zum Update-Client: `docs/JTL-UPDATE-CLIENT.md` im Pro-Repository.
 
 ## Einen Slider anlegen

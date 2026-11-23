@@ -9,13 +9,10 @@ use JTL\Helpers\Form;
 use JTL\Plugin\Bootstrapper;
 use JTL\Shop;
 use JTL\Smarty\JTLSmarty;
-use Plugin\mgd_slider\Install\InstallClient;
-use Plugin\mgd_slider\Install\Platform\Jtl as JtlInstall;
-use Plugin\mgd_slider\Install\Settings as InstallSettings;
-use Plugin\mgd_slider\Update\Admin\InstallReporting;
+use Plugin\mgd_slider\Kit\Platform\Jtl\Setup;
 
 /**
- * MGD Slider für JTL-Shop 5 - Release 1.5.1 (getestet nur mit JTL-Shop 5.8.2)
+ * MGD Slider für JTL-Shop 5 - Release 1.6.0 (getestet nur mit JTL-Shop 5.8.2)
  */
 final class Bootstrap extends Bootstrapper
 {
@@ -30,50 +27,50 @@ final class Bootstrap extends Bootstrapper
         require_once __DIR__ . '/src/SliderRepository.php';
         require_once __DIR__ . '/src/PrimeCandidates.php';
         require_once __DIR__ . '/src/AdminPage.php';
-        // Update + Install Client Autoload
-        require_once __DIR__ . '/src/UpdateTab.php';
-        UpdateTab::registerAutoload();
-        // Aktiv-Meldung max 1x am Tag, nur im Admin nie im Frontend
-        if (!Shop::isFrontend()) {
-            $this->pingInstall(false);
+        // Baukasten (Updates, Weitere Plugins, Installation melden) laedt JTL von selbst > Kit/
+        // Aktiv-Meldung max 1x am Tag, nur im Backend nie im Frontend
+        if (!Shop::isFrontend() && PHP_SAPI !== 'cli') {
+            Setup::forShop($this->getPlugin())?->ping();
         }
     }
 
-    // Install-Meldung bei installieren / aktivieren / update
+    // Anmeldung bei installieren / aktivieren / update (immer mit ?-> damit nix scheitert)
     public function installed()
     {
         parent::installed();
-        $this->pingInstall(true);
+        Setup::forShop($this->getPlugin())?->ping(true);
     }
 
     public function enabled()
     {
         parent::enabled();
-        $this->pingInstall(true);
+        Setup::forShop($this->getPlugin())?->ping(true);
     }
 
     public function updated($oldVersion, $newVersion)
     {
         parent::updated($oldVersion, $newVersion);
-        $this->pingInstall(true);
+        // beim Update kennt das Plugin-Objekt noch die alte Version > neue Version mitgeben, sonst meldet der Shop die alte
+        Setup::forShop(new VersionedPlugin($this->getPlugin(), (string) $newVersion))?->ping(true);
     }
 
     public function uninstalled(bool $deleteData = true): void
     {
+        // Abmelden bei theme.michael-gahn.de
+        Setup::forShop($this->getPlugin())?->uninstall($deleteData);
         parent::uninstalled($deleteData);
         if ($deleteData) {
             $this->getDB()->query('DROP TABLE IF EXISTS ' . SliderRepository::TABLE);
         }
     }
 
-    /** Admin-Tabs "Slider", "Lizenzen" und "Updates" */
+    /** Admin-Tabs "Slider", "Lizenzen" + Baukasten "Übersicht" und "Weitere Plugins" */
     public function renderAdminMenuTab(string $tabName, int $menuID, JTLSmarty $smarty): string
     {
         return match ($tabName) {
             'Slider' => $this->sliderTab(),
             'Lizenzen' => $this->licenseTab(),
-            'Updates' => $this->updatesTab(),
-            default => '',
+            default => Setup::renderTab(Setup::forShop($this->getPlugin()), $tabName) ?? '',
         };
     }
 
@@ -85,73 +82,6 @@ final class Bootstrap extends Bootstrapper
 
         // Token nur bei Speichern/Löschen prüfne
         return $page->render($_POST, $_GET, Form::getTokenInput(), $isPost ? Form::validateToken() : true);
-    }
-
-    private function updatesTab(): string
-    {
-        // Updates Menue
-        $ic = $this->installClient();
-        // Schalter "Installation melden" auf der Update-Seite
-        $install = $ic === null ? null : new InstallReporting(
-            static fn () => $ic->ping(),
-            static fn (): bool => $ic->isEnabled(),
-            static fn (bool $on) => $ic->setEnabled($on),
-            static fn (): string => $ic->status(),
-            InstallSettings::HINT,
-        );
-        $tab = new UpdateTab(
-            self::dataDir(),
-            // Version direkt aus info.xml
-            self::fileVersion(),
-            (string) parse_url(Shop::getURL(), PHP_URL_HOST),
-            defined('APPLICATION_VERSION') ? (string) APPLICATION_VERSION : '',
-            // CSRF Check
-            static fn (): bool => (bool) Form::validateToken(),
-            // Rechte
-            static fn (): bool => (bool) Shop::Container()->getAdminAccount()->permission('PLUGIN_ADMIN_VIEW'),
-            Form::getTokenInput(),
-            null,
-            $install,
-        );
-
-        return $tab->render((string) ($_SERVER['REQUEST_METHOD'] ?? 'GET'), $_POST);
-    }
-
-    // Datenordner ausserhalb Web (templates_c, mit Deny) - Update + Install teilen sich den
-    private static function dataDir(): string
-    {
-        return rtrim((defined('PFAD_ROOT') ? PFAD_ROOT : '') . (defined('PFAD_COMPILEDIR') ? PFAD_COMPILEDIR : 'templates_c/'), '/') . '/mgd_slider_update';
-    }
-
-    // null = Produkt/System ungültig > dann gar keine Meldung
-    private function installClient(): ?InstallClient
-    {
-        try {
-            // bei installed() lief boot() evtl. noch nicht > Autoload sicherstellen
-            require_once __DIR__ . '/src/UpdateTab.php';
-            UpdateTab::registerAutoload();
-
-            return JtlInstall::client(self::dataDir(), UpdateTab::PRODUCT, self::fileVersion());
-        } catch (\Throwable) {
-            return null;
-        }
-    }
-
-    // Version direkt aus der info.xml - Plugin-Objekt hat bei updated() noch die alte Version
-    public static function fileVersion(): string
-    {
-        $xml = @file_get_contents(__DIR__ . '/info.xml');
-
-        return is_string($xml) && preg_match('#<Version>\s*([0-9]+\.[0-9]+\.[0-9]+)\s*</Version>#', $xml, $m) === 1 ? $m[1] : '0.0.0';
-    }
-
-    // darf nie die Installation oder den Shop kaputt machen
-    private function pingInstall(bool $force): void
-    {
-        try {
-            $this->installClient()?->ping($force);
-        } catch (\Throwable) {
-        }
     }
 
     private function licenseTab(): string

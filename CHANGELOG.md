@@ -1,5 +1,15 @@
 # Änderungen
 
+## 1.6.0
+
+- Brückenversion: Das Plugin nutzt jetzt den gemeinsamen Baukasten von theme.michael-gahn.de (Ordner `Kit/`).
+- Neuer Reiter „Übersicht“ mit Info, Updates, Weitere Plugins und dem Schalter „Installation melden“. Er ersetzt den alten Reiter „Updates“. Neuer Reiter „Weitere Plugins“.
+- Der alte Update-Code im Ordner `src/Update` und `src/Install` wird nicht mehr angemeldet. Er bleibt noch liegen und fliegt in der Endversion raus.
+- Die Installation meldet sich bei Installieren, Aktivieren und Update, dann höchstens einmal am Tag im Admin. Beim Deinstallieren wird der Eintrag auf der Plattform gelöscht.
+- Die alte Installations-Kennung wird automatisch übernommen. Die Einstellungen bleiben.
+- Beim Update meldet die Installation gleich die neue Version (nicht erst am nächsten Tag).
+- Der Slider selbst ist unverändert.
+
 ## 1.5.1
 
 - Fix: Beim Update hat die Install-Meldung noch die alte Versionsnummer geschickt (das Plugin-Objekt kennt in dem Moment noch die alte Version). Die Version kommt jetzt direkt aus der `info.xml`.
