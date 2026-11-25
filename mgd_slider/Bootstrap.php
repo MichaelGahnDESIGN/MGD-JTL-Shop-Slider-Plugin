@@ -7,7 +7,6 @@ namespace Plugin\mgd_slider;
 use JTL\Events\Dispatcher;
 use JTL\Helpers\Form;
 use JTL\Plugin\Bootstrapper;
-use JTL\Shop;
 use JTL\Smarty\JTLSmarty;
 use Plugin\mgd_slider\Kit\Platform\Jtl\Setup;
 
@@ -29,7 +28,7 @@ final class Bootstrap extends Bootstrapper
         require_once __DIR__ . '/src/AdminPage.php';
         // Baukasten (Updates, Weitere Plugins, Installation melden) laedt JTL von selbst > Kit/
         // Aktiv-Meldung max 1x am Tag, nur im Backend nie im Frontend
-        if (!Shop::isFrontend() && PHP_SAPI !== 'cli') {
+        if (Setup::isBackend()) {
             Setup::forShop($this->getPlugin())?->ping();
         }
     }
