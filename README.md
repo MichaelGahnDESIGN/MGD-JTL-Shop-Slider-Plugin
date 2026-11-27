@@ -1,6 +1,6 @@
 # MGD Slider für JTL-Shop 5
 
-> Release 2.1.1. Läuft im JTL-Shop 5.8.2 (Demo-Shop). Andere Versionen sind nicht getestet.
+> Release 2.1.4. Läuft im JTL-Shop 5.8.2 (Demo-Shop). Andere Versionen sind nicht getestet.
 
 Mit diesem Plugin baust du einen Bild-Slider für deinen JTL-Shop. Es gibt zwei Arten:
 
@@ -20,7 +20,7 @@ Es gibt nie einen Artikel ohne Bild, nie einen nicht lieferbaren Artikel und nie
 
 ## Installation, Schritt für Schritt
 
-1. Lade die Datei `mgd_slider-2.1.1.zip` von der Release-Seite herunter.
+1. Lade die Datei `mgd_slider-2.1.4.zip` von der Release-Seite herunter.
 2. Melde dich im JTL-Shop-Backend an.
 3. Gehe zu **Plugins > Plugin-Verwaltung**.
 4. Wähle **Hochladen** und nimm die ZIP-Datei. (Alternativ: den Ordner `mgd_slider` per FTP nach `<Shop>/plugins/` kopieren.)
@@ -115,6 +115,13 @@ Der Update-Client in `src/Update` wird vom Generator erzeugt (`bin/build-update-
 ## Hilfe und Fehler melden
 
 Bitte als Issue in diesem Repository melden. Das ist keine Rechtsberatung: Die Lizenzfrage wird noch geprüft (siehe LICENSE).
+
+## MGD-Verwaltung: an- und ausschalten, Lizenz
+
+Im JTL-Backend zeigt der Reiter **Übersicht** des Plugins die MGD-Seite:
+
+- **Aktivieren / Deaktivieren:** Das Plugin lässt sich über die normale JTL-Plugin-Verwaltung an- oder ausschalten. Deine Slider bleiben dabei erhalten.
+- **Lizenz:** Hier steht, ob du die kostenlose Version (Free) nutzt. Eine Pro-Lizenz für den Slider gibt es noch nicht.
 
 ## Datenschutz
 

@@ -1,5 +1,9 @@
 # Änderungen
 
+## [2.1.4] - 2026-11-27
+
+- Kit 1.16.1: inaktive Plugins in der Übersicht, Weitere Plugins vollständig.
+
 ## [2.1.1] - 2026-11-25
 
 - Aktueller Baukasten, einheitliche Version.
