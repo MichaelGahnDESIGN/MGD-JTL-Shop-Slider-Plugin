@@ -1,5 +1,9 @@
 # Änderungen
 
+## [2.2.0] - 2026-11-28
+
+- Baukasten 1.17.0: Farbwähler, Updater und Weitere Plugins verbessert.
+
 ## [2.1.4] - 2026-11-27
 
 - Kit 1.16.1: inaktive Plugins in der Übersicht, Weitere Plugins vollständig.
